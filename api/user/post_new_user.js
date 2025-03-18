@@ -10,6 +10,7 @@ router.post('/users', async (req, res) => {
       return res.status(400).send({ message: "Bad Request" })
     }
     newUser.createdAt = new Date()
+    newUser.email = newUser.email.toLowerCase()
     newUser.isSubscribed = false
     newUser.status = 'general'
     const { userCollection } = await connectDB()

@@ -24,15 +24,19 @@ const postMultipleProduct = require('./api/products/post_multiple_product')
 const postNewUser = require('./api/user/post_new_user')
 const getAllUser = require('./api/user/get_all_user')
 const getAnUser = require('./api/user/get_an_user')
+const postSubscriber = require('./api/user/post_subscriber')
+const handleUpvote = require('./api/products/handle_upvote')
 
 // call the api
-//products
+// products
 app.use('/', getAllProduct)
 app.use('/', postMultipleProduct)
+app.use('/', handleUpvote)
 // users
 app.use('/', getAllUser)
 app.use('/', postNewUser)
 app.use('/', getAnUser)
+app.use('/', postSubscriber)
 
 // TODO: hit those api
 app.listen(port, () => {

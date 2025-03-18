@@ -13,7 +13,7 @@ router.get('/users/:email', async (req, res) => {
         .send({ message: 'Expecting a valid email address' })
     }
     const { userCollection } = await connectDB()
-    const result = await userCollection.findOne({email})
+    const result = await userCollection.findOne({email: email.toLowerCase()})
     res.status(200).send(result)
   } catch (err) {
     return res
