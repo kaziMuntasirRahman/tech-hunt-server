@@ -20,7 +20,7 @@ const connectDB = async () => {
     await client.db('admin').command({ ping: 1 })
     console.log('Pinged your deployment. Successfully connected to MongoDB!')
     return {
-      userCollection: db.collection('user'),
+      userCollection: db.collection('users'),
       productCollection: db.collection('products')
     }
   } catch (err) {
