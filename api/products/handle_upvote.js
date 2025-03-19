@@ -7,6 +7,12 @@ router.patch('/products/upvotes', async (req, res) => {
   console.log('Patch /products/upvotes api is being hit...')
   try {
     const { email, id } = req.query
+    const emailRegex = /^[a-zA-z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z0-9{2,}$]/
+    if (!emailRegex.test(email)) {
+      return res
+        .status(400)
+        .send({ message: 'Expecting a valid email address' })
+    }
     const { productCollection } = await connectDB()
     const findProduct = await productCollection.findOne({
       _id: new ObjectId(id)
