@@ -33,6 +33,12 @@ router.patch('/products/reviews/:id', async (req, res) => {
     if (!product.name) {
       return res.status(400).send({ message: "Couldn't find the product" })
     }
+    const isAlreadyReviewed = product.reviews.find(review=>review.reviewerEmail===reviewerEmail)
+    if(isAlreadyReviewed){
+      const message = "User already reviewed this product."
+      console.log(message)
+      return res.status(409).send(message)
+    }
 
     product.reviews.push(newReview)
 
