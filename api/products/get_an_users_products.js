@@ -3,7 +3,7 @@ const router = express.Router()
 const connectDB = require('../../db/mongo_client')
 
 router.get('/products/users/:email', async (req, res) => {
-  console.log('get /products/:email api is being hit')
+  console.log('get /products/users/:email api is being hit')
   try {
     const { email } = req.params
     if (!email) {
@@ -16,12 +16,12 @@ router.get('/products/users/:email', async (req, res) => {
         .send({ message: 'Expecting a valid Email Address' })
     }
     const { productCollection } = await connectDB()
-    const result = productCollection.find({ 'productOwner.email': email }).toArray()
+    const result = await productCollection.find({ 'productOwner.email': email }).toArray()
     res.status(200).send(result)
   } catch (err) {
     return res.status(500).send({ message: 'Server Error', error: err.message })
   } finally {
-    console.log('get /products/:email request finished')
+    console.log('get /products/users/:email request finished')
   }
 })
 
