@@ -17,9 +17,15 @@ app.get('/', (_, res) => {
 connectDB()
 
 // Import Routes
+// jwt
+const jwt = require('./api/jwt/jwt')
+//middlewares
+const verifyToken = require('./middlewares/verifyToken')
+const verifyAdmin = require('./middlewares/verifyAdmin')
 // products
 const getOneProduct = require('./api/products/get_a_product')
 const getAllProduct = require('./api/products/get_all_products')
+const getAllApprovedProduct = require('./api/products/get_all_approved_product')
 const postMultipleProduct = require('./api/products/post_product')
 const handleUpvote = require('./api/products/handle_upvote')
 const postReview = require('./api/products/post_new_review')
@@ -35,26 +41,50 @@ const postSubscriber = require('./api/user/post_subscriber')
 const updateUserInfo = require('./api/user/update_profile_info')
 const promoteToModerator = require('./api/user/promote_to_moderator')
 const promoteToAdmin = require('./api/user/promote_to_admin')
+const demoteToUser = require('./api/user/demote_to_user')
 
-// call the api
+
+// call the APIs
+//jwt
+app.use('/', jwt)
+
+// ---------- public routes -----------
+//products
+app.use('/', getAllApprovedProduct)
+// users
+app.use('/', postNewUser)
+app.use('/', postSubscriber)
+
+
+// ---------- Protected routes -----------
+app.use('/', verifyToken)
 // products
-app.use('/', getAllProduct)
 app.use('/', getOneProduct)
-app.use('/', postMultipleProduct)
 app.use('/', handleUpvote)
 app.use('/', postReview)
-app.use('/', deleteReview)
 app.use('/', getUsersProducts)
+app.use('/', postMultipleProduct)
+// users
+app.use('/', getAnUser)
+app.use('/', updateUserInfo)
+
+
+// ---------- Moderator routes -----------
+// products
 app.use('/', switchFeaturedProduct)
 app.use('/', updateProductStatus)
+app.use('/', getAllProduct)
+
+
+// ---------- Admin routes -----------
+app.use('/', verifyAdmin)
+// products
+app.use('/', deleteReview)
 // users
 app.use('/', getAllUser)
-app.use('/', postNewUser)
-app.use('/', getAnUser)
-app.use('/', postSubscriber)
-app.use('/', updateUserInfo)
 app.use('/', promoteToModerator)
 app.use('/', promoteToAdmin)
+app.use('/', demoteToUser)
 
 // TODO: hit those api
 app.listen(port, () => {

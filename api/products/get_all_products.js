@@ -1,8 +1,9 @@
 const express = require('express')
 const router = express.Router()
 const connectDB = require('../../db/mongo_client')
+const verifyModerator = require('../../middlewares/verifyModerator')
 
-router.get('/products', async (req, res) => {
+router.get('/products', verifyModerator, async (req, res) => {
   console.log('Get /products api is being hit...')
   try {
     // TODO: make query for filtering every property

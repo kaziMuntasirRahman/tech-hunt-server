@@ -3,8 +3,8 @@ const router = express.Router()
 const connectDB = require('../../db/mongo_client');
 const { ObjectId } = require('mongodb');
 
-router.patch('/users/:id/moderator', async (req, res)=>{
-  console.log("patch /users/:id/moderator api is being hit...")
+router.patch('/users/:id/status/moderator', async (req, res)=>{
+  console.log("patch /users/:id/status/moderator api is being hit...")
   try{
     const {id} = req.params
     const {userCollection} = await connectDB()
@@ -13,7 +13,7 @@ router.patch('/users/:id/moderator', async (req, res)=>{
   }catch(err){
     return res.status(200).send({message: "Server Error"})
   }finally{
-    console.log("patch /users/:id/moderator request finished.")
+    console.log("patch /users/:id/status/moderator request finished.")
   }
 })
 
