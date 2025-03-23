@@ -8,7 +8,7 @@ const verifyModerator = async (req, res, next) => {
     if (!user) {
       return res.status(401).send({ message: 'Unauthorized...6' })
     }
-    const isAdmin = user.status === 'moderator'
+    const isAdmin = (user.status === 'moderator' || user.status === 'admin')
     if (!isAdmin) {
       return res.status(403).send({ message: 'Forbidden...7' })
     }

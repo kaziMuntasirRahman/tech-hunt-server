@@ -42,6 +42,7 @@ const updateUserInfo = require('./api/user/update_profile_info')
 const promoteToModerator = require('./api/user/promote_to_moderator')
 const promoteToAdmin = require('./api/user/promote_to_admin')
 const demoteToUser = require('./api/user/demote_to_user')
+const verifyModerator = require('./middlewares/verifyModerator')
 
 
 // call the APIs
@@ -70,6 +71,7 @@ app.use('/', updateUserInfo)
 
 
 // ---------- Moderator routes -----------
+app.use('/', verifyModerator)
 // products
 app.use('/', switchFeaturedProduct)
 app.use('/', updateProductStatus)

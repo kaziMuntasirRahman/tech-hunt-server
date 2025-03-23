@@ -2,9 +2,8 @@ const express = require('express')
 const router = express.Router()
 const connectDB = require('../../db/mongo_client')
 const { ObjectId } = require('mongodb')
-const verifyModerator = require('../../middlewares/verifyModerator')
 
-router.patch('/products/:id/status', verifyModerator, async (req, res) => {
+router.patch('/products/:id/status', async (req, res) => {
   console.log('patch /products/:id/status api is being hit...')
   try {
     const { id } = req.params
