@@ -4,7 +4,7 @@ const verifyAdmin = async (req, res, next) => {
   const { email } = req.decoded
   try {
     const { userCollection } = await connectDB()
-    const user = await userCollection.findOne({ email: email })
+    const user = await userCollection.findOne({ email })
     if (!user) {
       return res.status(401).send({ message: 'Unauthorized...4' })
     }
@@ -12,6 +12,7 @@ const verifyAdmin = async (req, res, next) => {
     if (!isAdmin) {
       return res.status(403).send({ message: 'Forbidden...5' })
     }
+    console.log('....admin verification complete....')
     next()
   } catch (err) {
     return res.status(500).send({ message: 'Server Error' })

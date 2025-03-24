@@ -21,7 +21,8 @@ const connectDB = async () => {
     console.log('Pinged your deployment. Successfully connected to MongoDB!')
     return {
       userCollection: db.collection('users'),
-      productCollection: db.collection('products')
+      productCollection: db.collection('products'),
+      paymentCollection: db.collection('payments')
     }
   } catch (err) {
     console.log('Failed to connect to MongoDB: ', err)

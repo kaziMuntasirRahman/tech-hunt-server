@@ -12,6 +12,7 @@ router.post('/users', async (req, res) => {
     newUser.createdAt = new Date()
     newUser.email = newUser.email.toLowerCase()
     newUser.isSubscribed = false
+    newUser.hasPaidSubscription = false
     newUser.status = 'general'
     const { userCollection } = await connectDB()
     const result = await userCollection.insertOne(newUser)

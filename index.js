@@ -22,17 +22,20 @@ const jwt = require('./api/jwt/jwt')
 //middlewares
 const verifyToken = require('./middlewares/verifyToken')
 const verifyAdmin = require('./middlewares/verifyAdmin')
+const verifyModerator = require('./middlewares/verifyModerator')
 // products
 const getOneProduct = require('./api/products/get_a_product')
 const getAllProduct = require('./api/products/get_all_products')
 const getAllApprovedProduct = require('./api/products/get_all_approved_product')
 const postMultipleProduct = require('./api/products/post_product')
-const handleUpvote = require('./api/products/handle_upvote')
+const switchUpvote = require('./api/products/handle_upvote')
 const postReview = require('./api/products/post_new_review')
 const deleteReview = require('./api/products/delete_a_review')
 const getUsersProducts = require('./api/products/get_an_users_products')
 const switchFeaturedProduct = require('./api/products/switch_featured_product')
 const updateProductStatus = require('./api/products/update_status')
+const deleteProduct = require('./api/products/delete_a_product')
+const updateAProduct= require('./api/products/update_a_product')
 // users
 const postNewUser = require('./api/user/post_new_user')
 const getAllUser = require('./api/user/get_all_user')
@@ -42,8 +45,11 @@ const updateUserInfo = require('./api/user/update_profile_info')
 const promoteToModerator = require('./api/user/promote_to_moderator')
 const promoteToAdmin = require('./api/user/promote_to_admin')
 const demoteToUser = require('./api/user/demote_to_user')
-const verifyModerator = require('./middlewares/verifyModerator')
-
+const addNewProperty = require('./api/user/add_new_property')
+//payments
+const payment = require('./api/payment/stripe_payment_intent')
+const addPaymentInfo = require('./api/payment/add_payment_info')
+const getAllPayments = require('./api/payment/get_all_payment_info')
 
 // call the APIs
 //jwt
@@ -55,20 +61,26 @@ app.use('/', getAllApprovedProduct)
 // users
 app.use('/', postNewUser)
 app.use('/', postSubscriber)
+app.use('/', addNewProperty)
+
 
 
 // ---------- Protected routes -----------
 app.use('/', verifyToken)
 // products
 app.use('/', getOneProduct)
-app.use('/', handleUpvote)
+app.use('/', switchUpvote)
 app.use('/', postReview)
 app.use('/', getUsersProducts)
 app.use('/', postMultipleProduct)
+app.use('/', deleteProduct)
+app.use('/', updateAProduct)
 // users
 app.use('/', getAnUser)
 app.use('/', updateUserInfo)
-
+//payments
+app.use('/', payment)
+app.use('/', addPaymentInfo)
 
 // ---------- Moderator routes -----------
 app.use('/', verifyModerator)
@@ -87,6 +99,10 @@ app.use('/', getAllUser)
 app.use('/', promoteToModerator)
 app.use('/', promoteToAdmin)
 app.use('/', demoteToUser)
+// payments
+app.use('/', getAllPayments)
+
+
 
 // TODO: hit those api
 app.listen(port, () => {
