@@ -7,8 +7,22 @@ const app = express()
 const port = process.env.PORT
 
 // //middlewares
-app.use(cors())
 app.use(express.json())
+//Must remove "/" from your production URL
+app.use(
+  cors({
+    origin: [
+      'http://localhost:5173',
+      'https://tech-hunt0.web.app',
+      'https://tech-hunt0.firebaseapp.com'
+    ],
+    credentials: true,
+    allowedHeaders: ['Content-Type', 'Authorization'],
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS', 'PATCH'],
+    exposedHeaders: ['Authorization'],
+    maxAge: 86400 // 24 hours
+  })
+)
 
 app.get('/', (_, res) => {
   res.send('Tech Hunt server is running...')
@@ -35,7 +49,7 @@ const getUsersProducts = require('./api/products/get_an_users_products')
 const switchFeaturedProduct = require('./api/products/switch_featured_product')
 const updateProductStatus = require('./api/products/update_status')
 const deleteProduct = require('./api/products/delete_a_product')
-const updateAProduct= require('./api/products/update_a_product')
+const updateAProduct = require('./api/products/update_a_product')
 // users
 const postNewUser = require('./api/user/post_new_user')
 const getAllUser = require('./api/user/get_all_user')
@@ -50,6 +64,9 @@ const addNewProperty = require('./api/user/add_new_property')
 const payment = require('./api/payment/stripe_payment_intent')
 const addPaymentInfo = require('./api/payment/add_payment_info')
 const getAllPayments = require('./api/payment/get_all_payment_info')
+const updatePaymentStatus = require('./api/payment/update_payment_status')
+//reviews
+const getAllReview = require('./api/reviews/get_reviews')
 
 // call the APIs
 //jwt
@@ -62,8 +79,8 @@ app.use('/', getAllApprovedProduct)
 app.use('/', postNewUser)
 app.use('/', postSubscriber)
 app.use('/', addNewProperty)
-
-
+// reviews
+app.use('/', getAllReview)
 
 // ---------- Protected routes -----------
 app.use('/', verifyToken)
@@ -89,7 +106,6 @@ app.use('/', switchFeaturedProduct)
 app.use('/', updateProductStatus)
 app.use('/', getAllProduct)
 
-
 // ---------- Admin routes -----------
 app.use('/', verifyAdmin)
 // products
@@ -101,8 +117,7 @@ app.use('/', promoteToAdmin)
 app.use('/', demoteToUser)
 // payments
 app.use('/', getAllPayments)
-
-
+app.use('/', updatePaymentStatus)
 
 // TODO: hit those api
 app.listen(port, () => {

@@ -17,7 +17,7 @@ const connectDB = async () => {
     console.log('connectDB function is called...')
     // await client.connect()
     const db = client.db('TechHuntDB')
-    await client.db('admin').command({ ping: 1 })
+    // await client.db('admin').command({ ping: 1 })
     console.log('Pinged your deployment. Successfully connected to MongoDB!')
     return {
       userCollection: db.collection('users'),
