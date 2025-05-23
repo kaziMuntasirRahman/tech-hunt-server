@@ -75,6 +75,7 @@ app.use('/', jwt)
 // ---------- public routes -----------
 //products
 app.use('/', getAllApprovedProduct)
+app.use('/', getOneProduct)
 // users
 app.use('/', postNewUser)
 app.use('/', postSubscriber)
@@ -85,7 +86,6 @@ app.use('/', getAllReview)
 // ---------- Protected routes -----------
 app.use('/', verifyToken)
 // products
-app.use('/', getOneProduct)
 app.use('/', switchUpvote)
 app.use('/', postReview)
 app.use('/', getUsersProducts)
